@@ -1,8 +1,11 @@
 const Discord = require('discord.js');
+const config = require('./config.json');
 
-const client = new Discord.Client();
+const client = new Discord.Client({
+  intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_VOICE_STATES]
+});
 
-const monitoredChannelId = 'YOUR_CHANNEL_ID_HERE';
+const monitoredChannelId = config.channelId;
 
 client.on('voiceStateUpdate', (oldState, newState) => {
   if (newState.channel && newState.channel.type === 'voice' && newState.channel.id === monitoredChannelId) {
@@ -41,4 +44,4 @@ client.on('voiceStateUpdate', (oldState, newState) => {
   }
 });
 
-client.login('YOUR_BOT_TOKEN');
+client.login(config.token);
