@@ -57,9 +57,9 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     setTimeout(async () => {
       const updatedChannel = await oldState.guild.channels.fetch(voiceChannel.id);
       const members = updatedChannel.members;
-
+console.log('test');
       if (members.size === 0 || members.every(member => member.user.bot)) {
-        console.log('test');
+        
         voiceChannel.delete();
       }
     }, 1000);
