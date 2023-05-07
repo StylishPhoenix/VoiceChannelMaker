@@ -53,7 +53,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   if (oldState.channel && oldState.channel.type === 'voice') {
     const voiceChannel = oldState.channel;
     const members = voiceChannel.members.filter((member) => !member.user.bot);
-    if (members.size === 0 && voiceChannel.parentID === newState.channel.parentID) {
+    if (members.size === 0) {
       voiceChannel.delete();
     }
   }
