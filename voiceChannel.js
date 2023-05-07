@@ -38,6 +38,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       name: gameName,
       type: 2,
       parent: newState.channel.parent,
+      topic: 'Created by bot', // Add a specific topic to identify channels created by the bot
       permissionOverwrites: [
         {
           id: newState.member.id,
@@ -50,15 +51,16 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   }
 
   // Check if the user left any voice channel
-  if (oldState.channel && oldState.channel.type === 2 && oldState.channel.id !== monitoredChannelId) {
+  if (oldState.channel && oldState.channel.type === 2) {
     const voiceChannel = oldState.channel;
-    console.log('test');
+
     // Add a delay before checking members and deleting the channel
     setTimeout(async () => {
       const updatedChannel = await oldState.guild.channels.fetch(voiceChannel.id);
       const members = updatedChannel.members;
 
-      if (members.size === 0 || members.every(member => member.user.bot)) {
+      // Check if the channel topic matches the one set by the bot when creating the channel
+      if (updatedChannel.topic === 'Created by bot' && (members.size === 0 || members.every(member => member.user.bot))) {
         voiceChannel.delete();
       }
     }, 1000);
