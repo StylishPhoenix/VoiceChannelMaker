@@ -43,5 +43,5 @@ node voiceChannel.js
 ```
 Your bot should now be running and connected to your Discord server.
 
-Contributing
+## Contributing
 If you'd like to contribute, please fork the repository and submit your changes as a pull request.
