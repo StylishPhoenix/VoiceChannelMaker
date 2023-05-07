@@ -11,24 +11,15 @@ client.on('ready', async () => {
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
   // Check if the user joined the monitored voice channel
- if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
-  const member = await newState.guild.members.fetch(newState.member.id);
-  let gameName = "New Voice Channel";
-
-  if (member.presence.activities.length > 0) {
-    const activity = member.presence.activities.find(act => act.type === 'PLAYING');
-    if (activity && activity.name) {
-      gameName = getValidChannelName(activity.name);
-    }
-  }
-
-  newState.guild.channels.create(gameName, {
+if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
+  newState.guild.channels.create('Test Voice Channel', {
     type: 'GUILD_VOICE', // Change to 'GUILD_VOICE'
     parent: newState.channel.parent
   }).then((channel) => {
     newState.setChannel(channel);
   });
 }
+
 
 
   // Check if the user left any voice channel
