@@ -30,15 +30,14 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   // Check if the user joined the monitored voice channel
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
     const member = await newState.guild.members.fetch(newState.member.id);
-    let gameName = "New Voice Channel";
-   if (member.presence.activities.length > 0) {
-  const { name } = member.presence.activities.find(({ type }) => type === 0) || {};
-       console.log(name)
-  if (name) {
-    gameName = getValidChannelName(name);
-  }
-}
+    let gameName = getValidChannelName(); // Assign the default channel name
 
+    if (member.presence.activities.length > 0) {
+      const activity = member.presence.activities.find(act => act.type === 'PLAYING');
+      if (activity && activity.name) {
+        gameName = getValidChannelName(activity.name);
+      }
+    }
 
     newState.guild.channels.create({
       name: gameName,
@@ -51,7 +50,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         },
       ],
     }).then((channel) => {
-      createdChannels.add(channel.id); // Add the created channel ID to the Set
       newState.setChannel(channel);
     });
   }
