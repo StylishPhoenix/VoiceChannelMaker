@@ -12,8 +12,9 @@ client.on('ready', async () => {
 client.on('voiceStateUpdate', async (oldState, newState) => {
   // Check if the user joined the monitored voice channel
 if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
-  newState.guild.channels.create('Test Voice Channel', {
-    type: 'GUILD_VOICE', // Change to 'GUILD_VOICE'
+  newState.guild.channels.create({
+    name: 'Test Voice Channel',
+    type: discord.ChannelType.GuildVoice,
     parent: newState.channel.parent
   }).then((channel) => {
     newState.setChannel(channel);
