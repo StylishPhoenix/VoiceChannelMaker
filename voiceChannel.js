@@ -19,10 +19,10 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     let gameName = "New Voice Channel";
 
     if (member.presence.activities.length > 0) {
-      const activity = member.presence.activities.find(act => act.type === 'PLAYING');
-      if (activity) {
-        gameName = activity.name;
-      }
+       const activity = member.presence.activities.find(act => act.type === 'PLAYING');
+    if (activity) {
+       gameName = activity.name || "New Voice Channel";
+       }
     }
 
     newState.guild.channels.create(gameName, {
