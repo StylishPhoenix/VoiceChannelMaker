@@ -23,7 +23,7 @@ const getValidChannelName = (name) => {
   validName = validName.slice(0, maxLength - (prefix.length + suffix.length));
 
   // Map the characters to the corresponding font data and combine
-  validName = validName.split('').map(char => letterData[/*char.toLowerCase()*/] || letterData[' ']).join('');
+  validName = validName.split('').map(char => letterData[char] || letterData[' ']).join('');
 
   return prefix + validName + suffix;
 };
