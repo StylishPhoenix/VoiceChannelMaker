@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const config = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences]});
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMembers]});
 
 const monitoredChannelId = config.channelId;
 
@@ -9,15 +9,17 @@ client.on('ready', async () => {
     console.log(`Bot has connected to Discord!`);
 });
 
-client.on('voiceStateUpdate', (oldState, newState) => {
+client.on('voiceStateUpdate', async (oldState, newState) => {
   console.log('New state:', newState.channel ? newState.channel.id : 'None');
   console.log('Monitored channel ID:', monitoredChannelId);
 
   // Check if the user joined the monitored voice channel
   if (newState.channel && newState.channel.type === 'voice' && newState.channel.id === monitoredChannelId) {
+    const member = await newState.guild.members.fetch(newState.member.id);
     let gameName = "New Voice Channel";
-    if (newState.member.presence.activities.length > 0) {
-      const activity = newState.member.presence.activities.find(act => act.type === 'PLAYING');
+
+    if (member.presence.activities.length > 0) {
+      const activity = member.presence.activities.find(act => act.type === 'PLAYING');
       if (activity) {
         gameName = activity.name;
       }
