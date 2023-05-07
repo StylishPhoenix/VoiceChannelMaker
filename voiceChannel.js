@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const config = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]});
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences]});
 
 const monitoredChannelId = config.channelId;
 
@@ -10,10 +10,20 @@ client.on('ready', async () => {
 });
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-  console.log('New state:', newState.channel.id);
+  console.log('New state:', newState.channel ? newState.channel.id : 'None');
   console.log('Monitored channel ID:', monitoredChannelId);
+
+  // Check if the user joined the monitored voice channel
   if (newState.channel && newState.channel.type === 'voice' && newState.channel.id === monitoredChannelId) {
-    newState.guild.channels.create('New Voice Channel', {
+    let gameName = "New Voice Channel";
+    if (newState.member.presence.activities.length > 0) {
+      const activity = newState.member.presence.activities.find(act => act.type === 'PLAYING');
+      if (activity) {
+        gameName = activity.name;
+      }
+    }
+
+    newState.guild.channels.create(gameName, {
       type: 'voice',
       userLimit: 2,
       parent: newState.channel.parent,
@@ -32,17 +42,16 @@ client.on('voiceStateUpdate', (oldState, newState) => {
         MANAGE_CHANNELS: true,
         MANAGE_ROLES: true,
       });
-      
+
       newState.setChannel(channel);
     });
   }
-});
 
-client.on('voiceStateUpdate', (oldState, newState) => {
-  if (oldState.channel && oldState.channel.type === 'voice' && oldState.channel.id === monitoredChannelId) {
+  // Check if the user left any voice channel
+  if (oldState.channel && oldState.channel.type === 'voice') {
     const voiceChannel = oldState.channel;
     const members = voiceChannel.members.filter((member) => !member.user.bot);
-    if (members.size === 0) {
+    if (members.size === 0 && voiceChannel.parentID === oldState.channel.parentID) {
       voiceChannel.delete();
     }
   }
