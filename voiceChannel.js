@@ -10,11 +10,11 @@ client.on('ready', async () => {
 });
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
-  console.log('New state:', newState.channel ? newState.channel.id : 'None');
-  console.log('Monitored channel ID:', monitoredChannelId);
-
   // Check if the user joined the monitored voice channel
   if (newState.channel && newState.channel.type === 'voice' && newState.channel.id === monitoredChannelId) {
+     console.log('New state:', newState.channel ? newState.channel.id : 'None');
+  console.log('Monitored channel ID:', monitoredChannelId);
+
     const member = await newState.guild.members.fetch(newState.member.id);
     let gameName = "New Voice Channel";
 
