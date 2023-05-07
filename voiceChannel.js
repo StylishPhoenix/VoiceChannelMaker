@@ -68,7 +68,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       const updatedChannel = await oldState.guild.channels.fetch(voiceChannel.id)
             .catch((error) => {
         console.log('Error deleting channel.', error);
-       }
+       });
       const members = updatedChannel.members;
 
       // Check if the channel ID is in the Set of channels created by the bot
