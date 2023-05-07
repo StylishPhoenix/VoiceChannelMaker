@@ -56,13 +56,20 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   }
 
   // Check if the user left any voice channel
-  if (oldState.channel && oldState.channel.type === 2 && createdChannels.has(oldState.channel.id)) {
+  if (oldState.channel && oldState.channel.type === 2) {
     const voiceChannel = oldState.channel;
-    const members = voiceChannel.members.filter((member) => !member.user.bot);
-    if (members.size === 0 && voiceChannel.parentID === newState.channel.parentID) {
-      voiceChannel.delete();
-      createdChannels.delete(oldState.channel.id);
-    }
+
+    // Add a delay before checking members and deleting the channel
+    setTimeout(async () => {
+      const updatedChannel = await oldState.guild.channels.fetch(voiceChannel.id);
+      const members = updatedChannel.members;
+
+      // Check if the channel ID is in the Set of channels created by the bot
+      if (createdChannels.has(voiceChannel.id) && (members.size === 0 || members.every(member => member.user.bot))) {
+        voiceChannel.delete();
+        createdChannels.delete(voiceChannel.id); // Remove the channel ID from the Set after deleting the channel
+      }
+    }, 1000);
   }
 });
 
