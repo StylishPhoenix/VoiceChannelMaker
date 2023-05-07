@@ -10,7 +10,8 @@ client.on('ready', async () => {
 });
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-  console.log(monitoredChannelId);
+  console.log('New state:', newState.channel.id);
+  console.log('Monitored channel ID:', monitoredChannelId);
   if (newState.channel && newState.channel.type === 'voice' && newState.channel.id === monitoredChannelId) {
     newState.guild.channels.create('New Voice Channel', {
       type: 'voice',
