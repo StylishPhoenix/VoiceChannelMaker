@@ -24,11 +24,11 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
        gameName = activity.name || "New Voice Channel";
        }
     }
-
+    console.log('test');
     newState.guild.channels.create(gameName, {
       type: 'voice',
       userLimit: 2,
-      parent: newState.channel.parent/*,
+      parent: newState.channel.parent,
       permissionOverwrites: [
         {
           id: newState.guild.roles.everyone.id,
@@ -46,8 +46,8 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       });
 
       newState.setChannel(channel);
-    });*/
-  )};
+    });
+  )}
 
   // Check if the user left any voice channel
   if (oldState.channel && oldState.channel.type === 'voice') {
