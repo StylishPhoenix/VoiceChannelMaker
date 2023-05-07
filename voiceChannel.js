@@ -5,6 +5,10 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 
 const monitoredChannelId = config.channelId;
 
+client.on('ready', async () => {
+    console.log(`Bot has connected to Discord!`);
+});
+
 client.on('voiceStateUpdate', async (oldState, newState) => {
   // Check if the user joined the monitored voice channel
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
