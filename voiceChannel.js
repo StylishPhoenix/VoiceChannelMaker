@@ -29,7 +29,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       type: 'voice',
       userLimit: 2,
       parent: newState.channel.parent,
-      permissionOverwrites: [
+    /*  permissionOverwrites: [
         {
           id: newState.guild.roles.everyone.id,
           deny: ['VIEW_CHANNEL'],
@@ -43,7 +43,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       channel.updateOverwrite(newState.member.id, {
         MANAGE_CHANNELS: true,
         MANAGE_ROLES: true,
-      });
+      */});
 
       newState.setChannel(channel);
     });
