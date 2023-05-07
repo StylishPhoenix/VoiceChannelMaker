@@ -28,7 +28,7 @@ const getValidChannelName = (name) => {
     const lowerChar = char.toLowerCase();
     return letterData[lowerChar] ? String.fromCharCode(parseInt(letterData[lowerChar], 16)) : letterData[' '];
   }).join('');
-
+  console.log(validName);
   return prefix + validName + suffix;
 };
 
