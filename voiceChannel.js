@@ -12,14 +12,17 @@ client.on('ready', async () => {
 const getValidChannelName = (name) => {
   const maxLength = 100;
   const invalidCharacters = /[@#:]/g;
+  const prefix = "✵┃";
+  const suffix = "┃✵";
 
   if (!name || name.length < 2) {
-    return "New Voice Channel";
+    return prefix + "New Voice Channel" + suffix;
   }
 
-  const validName = name.replace(invalidCharacters, "").slice(0, maxLength);
-  return validName.length >= 2 ? validName : "New Voice Channel";
+  const validName = name.replace(invalidCharacters, "").slice(0, maxLength - (prefix.length + suffix.length));
+  return validName.length >= 2 ? prefix + validName + suffix : prefix + "New Voice Channel" + suffix;
 };
+
 
 const createdChannels = new Set(); // Store the channel IDs of the channels created by the bot
 
