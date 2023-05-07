@@ -17,7 +17,7 @@ const getValidChannelName = (name) => {
   const suffix = "┃✵";
 
   if (!name || name.length < 2) {
-    return prefix + "𝐍𝐞𝐰 𝐕𝐨𝐢𝐜𝐞 𝐂𝐡𝐚𝐧𝐧𝐞𝐥" + suffix;
+    return prefix + "𝐓𝐞𝐦𝐩 𝐕𝐨𝐢𝐜𝐞" + suffix;
   }
 
   let validName = name.replace(invalidCharacters, "");
