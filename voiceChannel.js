@@ -52,11 +52,16 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   // Check if the user left any voice channel
   if (oldState.channel && oldState.channel.type === 'voice') {
     const voiceChannel = oldState.channel;
-    const members = voiceChannel.members;
 
-    if (members.every(member => member.user.bot)) {
-      voiceChannel.delete();
-    }
+    // Add a delay before checking members and deleting the channel
+    setTimeout(async () => {
+      const updatedChannel = await oldState.guild.channels.fetch(voiceChannel.id);
+      const members = updatedChannel.members;
+
+      if (members.size === 0 || members.every(member => member.user.bot)) {
+        voiceChannel.delete();
+      }
+    }, 1000);
   }
 });
 
