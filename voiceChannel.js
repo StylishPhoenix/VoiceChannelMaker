@@ -41,7 +41,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       permissionOverwrites: [
         {
           id: newState.member.id,
-          allow: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
+          allow: [PermissionsBitField.Flags.ManageChannel, PermissionsBitField.Flags.ManageRoles],
         },
       ],
     }).then((channel) => {
