@@ -40,10 +40,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       parent: newState.channel.parent,
       permissionOverwrites: [
         {
-          id: newState.guild.roles.everyone.id,
-          deny: ['VIEW_CHANNEL'],
-        },
-        {
           id: newState.member.id,
           allow: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
         },
