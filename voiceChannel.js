@@ -9,6 +9,18 @@ client.on('ready', async () => {
     console.log(`Bot has connected to Discord!`);
 });
 
+const getValidChannelName = (name) => {
+  const maxLength = 100;
+  const invalidCharacters = /[@#:]/g;
+
+  if (!name || name.length < 2) {
+    return "New Voice Channel";
+  }
+
+  const validName = name.replace(invalidCharacters, "").slice(0, maxLength);
+  return validName.length >= 2 ? validName : "New Voice Channel";
+};
+
 client.on('voiceStateUpdate', async (oldState, newState) => {
   // Check if the user joined the monitored voice channel
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
@@ -35,11 +47,10 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   if (oldState.channel && oldState.channel.type === 'voice') {
     const voiceChannel = oldState.channel;
     const members = voiceChannel.members.filter((member) => !member.user.bot);
-    if (members.size === 0 && voiceChannel.parentID === oldState.channel.parentID) {
+    if (members.size === 0 && voiceChannel.parentID === newState.channel.parentID) {
       voiceChannel.delete();
     }
   }
 });
-
 
 client.login(config.token);
