@@ -46,7 +46,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       });
 
       newState.setChannel(channel);
-    })*/;
+    });*/
   }
 
   // Check if the user left any voice channel
