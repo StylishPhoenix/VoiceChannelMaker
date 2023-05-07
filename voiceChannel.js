@@ -28,13 +28,14 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
     const member = await newState.guild.members.fetch(newState.member.id);
     let gameName = "New Voice Channel";
-    if (member.presence.activities.length > 0) {
-      const activity = member.presence.activities.find(act => act.type === 'PLAYING');
-            console.log(activity.name);
-      if (activity && activity.name) {
-        gameName = getValidChannelName(activity.name);
-      }
-    }
+   if (member.presence.activities.length > 0) {
+  const { name } = member.presence.activities.find(({ type }) => type === 0) || {};
+       console.log(name)
+  if (name) {
+    gameName = getValidChannelName(name);
+  }
+}
+
 
     newState.guild.channels.create({
       name: gameName,
