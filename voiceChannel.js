@@ -5,6 +5,10 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 
 const monitoredChannelId = config.channelId;
 
+client.on('ready', async () => {
+    console.log(`Bot has connected to Discord!`);
+});
+
 client.on('voiceStateUpdate', (oldState, newState) => {
   if (newState.channel && newState.channel.type === 'voice' && newState.channel.id === monitoredChannelId) {
     newState.guild.channels.create('New Voice Channel', {
