@@ -24,7 +24,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
        gameName = activity.name || "New Voice Channel";
        }
     }
-    console.log('test');
     newState.guild.channels.create(gameName, {
       type: 'voice',
       userLimit: 2,
@@ -44,7 +43,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         MANAGE_CHANNELS: true,
         MANAGE_ROLES: true,
       });
-
+      console.log('test');
       newState.setChannel(channel);
     });
   }
