@@ -15,16 +15,15 @@ const getValidChannelName = (name) => {
   const invalidCharacters = /[@#:]/g;
   const prefix = "✵┃";
   const suffix = "┃✵";
-
   if (!name || name.length < 2) {
-    return prefix + "New Voice Channel" + suffix;
+    return prefix + "𝐓𝐞𝐦𝐩 𝐕𝐨𝐢𝐜𝐞" + suffix;
   }
 
   let validName = name.replace(invalidCharacters, "");
   validName = validName.slice(0, maxLength - (prefix.length + suffix.length));
 
   // Map the characters to the corresponding font data and combine
-  validName = validName.split('').map(char => letterData[char.toLowerCase()] || letterData[' ']).join('');
+  validName = validName.split('').map(char => letterData[char] || letterData[' ']).join('');
 
   return prefix + validName + suffix;
 };
