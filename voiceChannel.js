@@ -65,7 +65,8 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     const voiceChannel = oldState.channel;
 
     // Add a delay before checking members and deleting the channel
-    setTimeout(async () => {
+    try{
+        setTimeout(async () => {
       const updatedChannel = await oldState.guild.channels.fetch(voiceChannel.id);
       const members = updatedChannel.members;
 
@@ -74,7 +75,10 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         voiceChannel.delete();
         createdChannels.delete(voiceChannel.id); // Remove the channel ID from the Set after deleting the channel
       }
-    }, 1000);
+    }, 1000); 
+    }catch{
+        console.log('Error deleting channel.');
+    }
   }
 });
 
