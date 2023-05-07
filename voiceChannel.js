@@ -14,7 +14,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
 if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
   newState.guild.channels.create({
     name: 'Test Voice Channel',
-    type: discord.ChannelType.GuildVoice,
+    type: 2,
     parent: newState.channel.parent
   }).then((channel) => {
     newState.setChannel(channel);
