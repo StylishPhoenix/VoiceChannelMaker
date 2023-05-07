@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, PermissionsBitField } = require('discord.js');
 const config = require('./config.json');
+const letterData = require('./letterData.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMembers]});
 
@@ -19,8 +20,13 @@ const getValidChannelName = (name) => {
     return prefix + "New Voice Channel" + suffix;
   }
 
-  const validName = name.replace(invalidCharacters, "").slice(0, maxLength - (prefix.length + suffix.length));
-  return validName.length >= 2 ? prefix + validName + suffix : prefix + "New Voice Channel" + suffix;
+  let validName = name.replace(invalidCharacters, "");
+  validName = validName.slice(0, maxLength - (prefix.length + suffix.length));
+
+  // Map the characters to the corresponding font data and combine
+  validName = validName.split('').map(char => letterData[char.toLowerCase()] || letterData[' ']).join('');
+
+  return prefix + validName + suffix;
 };
 
 
@@ -72,9 +78,5 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     }, 1000);
   }
 });
-
-
-
-
 
 client.login(config.token);
