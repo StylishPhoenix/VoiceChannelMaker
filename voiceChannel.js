@@ -39,7 +39,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     let gameName = getValidChannelName(); // Assign the default channel name
 
     if (member.presence.activities.length > 0) {
-      const activity = member.presence.activities.find(act => act.type === 'PLAYING');
+      const activity = member.presence.activities.find(act => act.type === 0);
       if (activity && activity.name) {
         gameName = getValidChannelName(activity.name);
       }
