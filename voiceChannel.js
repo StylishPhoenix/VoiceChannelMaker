@@ -50,7 +50,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   }
 
   // Check if the user left any voice channel
-  if (oldState.channel && oldState.channel.type === 'voice') {
+  if (oldState.channel && oldState.channel.type === 'voice' && oldState.channel.id !== monitoredChannelId) {
     const voiceChannel = oldState.channel;
 
     // Add a delay before checking members and deleting the channel
@@ -64,6 +64,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     }, 1000);
   }
 });
+
 
 
 client.login(config.token);
