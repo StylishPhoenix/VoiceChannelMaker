@@ -28,7 +28,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
     const member = await newState.guild.members.fetch(newState.member.id);
     let gameName = "New Voice Channel";
-    console.log(member.presence.activities);
+    console.log(activity.name);
     if (member.presence.activities.length > 0) {
       const activity = member.presence.activities.find(act => act.type === 'PLAYING');
       if (activity && activity.name) {
