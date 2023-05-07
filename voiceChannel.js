@@ -15,7 +15,6 @@ const getValidChannelName = (name) => {
   const invalidCharacters = /[@#:]/g;
   const prefix = "✵┃";
   const suffix = "┃✵";
-  console.log(name);
   if (!name || name.length < 2) {
     return prefix + "𝐓𝐞𝐦𝐩 𝐕𝐨𝐢𝐜𝐞" + suffix;
   }
