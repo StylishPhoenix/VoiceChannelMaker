@@ -59,6 +59,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       const members = updatedChannel.members;
 
       if (members.size === 0 || members.every(member => member.user.bot)) {
+        console.log('test');
         voiceChannel.delete();
       }
     }, 1000);
