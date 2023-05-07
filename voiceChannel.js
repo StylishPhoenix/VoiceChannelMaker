@@ -21,6 +21,8 @@ const getValidChannelName = (name) => {
   return validName.length >= 2 ? validName : "New Voice Channel";
 };
 
+const createdChannels = new Set(); // Store the channel IDs of the channels created by the bot
+
 client.on('voiceStateUpdate', async (oldState, newState) => {
   // Check if the user joined the monitored voice channel
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
@@ -38,7 +40,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       name: gameName,
       type: 2,
       parent: newState.channel.parent,
-      topic: 'Created by bot', // Add a specific topic to identify channels created by the bot
       permissionOverwrites: [
         {
           id: newState.member.id,
@@ -46,6 +47,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         },
       ],
     }).then((channel) => {
+      createdChannels.add(channel.id); // Add the created channel ID to the Set
       newState.setChannel(channel);
     });
   }
@@ -59,13 +61,15 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       const updatedChannel = await oldState.guild.channels.fetch(voiceChannel.id);
       const members = updatedChannel.members;
 
-      // Check if the channel topic matches the one set by the bot when creating the channel
-      if (updatedChannel.topic === 'Created by bot' && (members.size === 0 || members.every(member => member.user.bot))) {
+      // Check if the channel ID is in the Set of channels created by the bot
+      if (createdChannels.has(voiceChannel.id) && (members.size === 0 || members.every(member => member.user.bot))) {
         voiceChannel.delete();
+        createdChannels.delete(voiceChannel.id); // Remove the channel ID from the Set after deleting the channel
       }
     }, 1000);
   }
 });
+
 
 
 
