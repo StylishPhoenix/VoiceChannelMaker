@@ -74,8 +74,8 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         voiceChannel.delete();
         createdChannels.delete(voiceChannel.id); // Remove the channel ID from the Set after deleting the channel
     }
-    }catch{
-        console.log('Error deleting channel.');
+    }catch (error){
+        console.log('Error deleting channel.', error);
     }
   }
 });
