@@ -37,7 +37,17 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     newState.guild.channels.create({
       name: gameName,
       type: 2,
-      parent: newState.channel.parent
+      parent: newState.channel.parent,
+      permissionOverwrites: [
+        {
+          id: newState.guild.roles.everyone.id,
+          deny: ['VIEW_CHANNEL'],
+        },
+        {
+          id: newState.member.id,
+          allow: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
+        },
+      ],
     }).then((channel) => {
       newState.setChannel(channel);
     });
@@ -52,5 +62,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     }
   }
 });
+
 
 client.login(config.token);
