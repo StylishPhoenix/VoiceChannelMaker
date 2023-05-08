@@ -7,6 +7,7 @@ This Discord bot automatically creates voice channels based on the game a user i
 - Creates a new voice channel with the game name when a user joins the monitored voice channel
 - Sets the user who joined the monitored voice channel as the manager of the new voice channel
 - Automatically deletes the created voice channel when all users leave it
+- The bot can create channels keeping to your server's font, and has the ability to insert a prefix/suffix to your VC titles.
 
 ## Prerequisites
 
