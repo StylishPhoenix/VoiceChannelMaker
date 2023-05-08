@@ -23,7 +23,7 @@ git clone https://github.com/your-repo-url/voice-channel-creator.git
 ```
 Change the working directory to the project folder:
 ```
-cd voice-channel-creator
+cd VoiceChannelMaker
 ```
 
 Install the required dependencies:
