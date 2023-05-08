@@ -50,7 +50,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       name: gameName,
       type: 2,
       parent: newState.channel.parent,
-      position: monitoredChannelPosition + 1,
       permissionOverwrites: [
         {
             id: newState.guild.roles.everyone.id,
@@ -68,6 +67,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     }).then((channel) => {
       createdChannels.add(channel.id);
       newState.setChannel(channel);
+      channel.setPosition(monitoredChannelPosition + 1).catch(console.error);
     });
   }
 
