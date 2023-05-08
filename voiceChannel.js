@@ -36,7 +36,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
     const member = await newState.guild.members.fetch(newState.member.id);
     let gameName = getValidChannelName(); // Assign the default channel name
-    const monitoredChannelObject = newState.guild.channels.cache.get(channel.id);
+    const monitoredChannelObject = newState.guild.channels.cache.get(monitoredChannelId);
     const monitoredChannelPosition = monitoredChannelObject.position;  
     if (member.presence.activities.length > 0) {
       const activity = member.presence.activities.find(act => act.type === 0);
