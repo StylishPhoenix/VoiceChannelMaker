@@ -56,7 +56,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
             deny: [PermissionsBitField.Flags.ViewChannel],
         },
         {
-            id: '1076350995799490621',
+            id: acceptedRolesId,
             allow: [PermissionsBitField.Flags.ViewChannel],
         },
         {
