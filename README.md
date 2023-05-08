@@ -35,7 +35,8 @@ Create a config.json file in the project folder and add your Discord bot token a
 ```
 {
   "token": "YOUR_BOT_TOKEN",
-  "channelId": "YOUR_MONITORED_CHANNEL_ID"
+  "channelId": "YOUR_MONITORED_CHANNEL_ID",
+  "acceptedRolesId": "YOUR_RULES_ACCEPTED_ROLE_ID"
 }
 ```
 Run the bot:
