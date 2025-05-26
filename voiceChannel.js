@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, PermissionsBitField } = require('discord.js');
+const { Client, GatewayIntentBits, PermissionsBitField, Activity } = require('discord.js');
 const config = require('./config.json');
 const letterData = require('./letterData.json');
 
@@ -32,17 +32,22 @@ const getValidChannelName = (name) => {
 const createdChannels = new Set();
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
-  // Check if the user joined the monitored voice channel
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
-    const member = await newState.guild.members.fetch(newState.member.id);
-    let gameName = getValidChannelName(); // Assign the default channel name
-    const monitoredChannelObject = newState.guild.channels.cache.get(monitoredChannelId);
-    const monitoredChannelPosition = monitoredChannelObject.position;  
-    if (member.presence.activities.length > 0) {
-      const activity = member.presence.activities.find(act => act.type === 0);
-      if (activity && activity.name) {
+    const member = newState.member;
+    let gameName = getValidChannelName(); // Default
+
+    // Use presence directly from the event
+    const presence = member?.presence;
+    if (presence && Array.isArray(presence.activities) && presence.activities.length > 0) {
+      // Try to find a "Playing" activity
+      const activity = presence.activities.find(act => act.type === 0 && act.name);
+      if (activity) {
         gameName = getValidChannelName(activity.name);
+      } else {
+        gameName = getValidChannelName(member.displayName);
       }
+    } else {
+      gameName = getValidChannelName(member.displayName);
     }
 
     newState.guild.channels.create({
@@ -66,6 +71,8 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     }).then((channel) => {
       createdChannels.add(channel.id);
       newState.setChannel(channel);
+      const monitoredChannel = newState.guild.channels.cache.get(monitoredChannelId);
+      const monitoredChannelPosition = monitoredChannel ? monitoredChannel.position : 0;
       channel.setPosition(monitoredChannelPosition + 1).catch(console.error);
     });
   }
