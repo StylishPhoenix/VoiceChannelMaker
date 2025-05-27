@@ -60,10 +60,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
             deny: [PermissionsBitField.Flags.ViewChannel],
         },
         {
-            id: config.acceptedRolesId,
-            allow: [PermissionsBitField.Flags.ViewChannel],
-        },
-        {
           id: newState.member.id,
           allow: [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles],
         },
