@@ -53,6 +53,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     newState.guild.channels.create({
       name: gameName,
       type: 2,
+      bitrate: 384,
       parent: newState.channel.parent,
       permissionOverwrites: [
         {
