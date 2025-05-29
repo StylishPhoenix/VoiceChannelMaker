@@ -5,6 +5,7 @@ const letterData = require('./letterData.json');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMembers]});
 
 const monitoredChannelId = config.channelId;
+const approvedId = config.approvedId;
 
 client.on('ready', async () => {
     console.log(`Bot has connected to Discord!`);
