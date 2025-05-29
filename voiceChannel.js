@@ -5,7 +5,7 @@ const letterData = require('./letterData.json');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMembers]});
 
 const monitoredChannelId = config.channelId;
-const approvedId = config.approvedId;
+const blockedId = config.blockedId;
 
 client.on('ready', async () => {
     console.log(`Bot has connected to Discord!`);
@@ -58,8 +58,12 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       parent: newState.channel.parent,
       permissionOverwrites: [
         {
-            id: approvedId,
+            id: blockedId,
             deny: [PermissionsBitField.Flags.ViewChannel],
+        },
+       {
+            id: newState.guild.roles.everyone.id,
+            allow: [PermissionsBitField.Flags.ViewChannel],
         },
         {
           id: newState.member.id,
