@@ -57,7 +57,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       parent: newState.channel.parent,
       permissionOverwrites: [
         {
-            id: newState.guild.roles.everyone.id,
+            id: 1167623196409876480,
             deny: [PermissionsBitField.Flags.ViewChannel],
         },
         {
