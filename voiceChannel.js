@@ -61,10 +61,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
             id: blockedId,
             deny: [PermissionsBitField.Flags.ViewChannel],
         },
-       {
-            id: newState.guild.roles.everyone.id,
-            allow: [PermissionsBitField.Flags.ViewChannel],
-        },
         {
           id: newState.member.id,
           allow: [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles],
