@@ -7,7 +7,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 const monitoredChannelId = config.channelId;
 const blockedId = config.blockedId;
 
-client.on('ready', async () => {
+client.on('clientReady', async () => {
     console.log(`Bot has connected to Discord!`);
 });
 
