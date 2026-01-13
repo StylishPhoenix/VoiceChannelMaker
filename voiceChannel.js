@@ -35,6 +35,7 @@ const createdChannels = new Set();
 client.on('voiceStateUpdate', async (oldState, newState) => {
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
     const member = newState.member;
+    console.log('Test");
     let gameName = getValidChannelName(); // Default
 
     // Use presence directly from the event
@@ -42,6 +43,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     if (presence && Array.isArray(presence.activities) && presence.activities.length > 0) {
       // Try to find a "Playing" activity
       const activity = presence.activities.find(act => act.type === 0 && act.name);
+        console.log('Test2');
       if (activity) {
         gameName = getValidChannelName(activity.name);
       } else {
@@ -56,16 +58,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
       type: 2,
       bitrate: 384000,
       parent: newState.channel.parent,
-      permissionOverwrites: [
-        {
-            id: blockedId,
-            deny: [PermissionsBitField.Flags.ViewChannel],
-        },
-        {
-          id: newState.member.id,
-          allow: [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles],
-        },
-      ],
     }).then((channel) => {
       createdChannels.add(channel.id);
       newState.setChannel(channel);
