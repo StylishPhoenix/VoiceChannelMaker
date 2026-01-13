@@ -35,7 +35,7 @@ const createdChannels = new Set();
 client.on('voiceStateUpdate', async (oldState, newState) => {
   if (newState.channel && newState.channel.type === 2 && newState.channel.id === monitoredChannelId) {
     const member = newState.member;
-    console.log('Test");
+    console.log('Test');
     let gameName = getValidChannelName(); // Default
 
     // Use presence directly from the event
