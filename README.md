@@ -20,7 +20,7 @@ This Discord bot automatically creates voice channels based on the game a user i
 1. Clone this repository or download the source code:
 
 ```
-git clone https://github.com/your-repo-url/voice-channel-creator.git
+git clone https://github.com/StylishPhoenix/VoiceChannelMaker.git
 ```
 Change the working directory to the project folder:
 ```
